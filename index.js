@@ -16,17 +16,17 @@ app.use(bodyParser.json());
 //Returns data from the Assets. 
 app.post('/api/fetchAssetDetail', async (req, res) => {
   try {
-    let { asset_issuer=null, perPage = 10,asset_code=null,cursor=null } = req.body; // Accessing parameters from query string
+    let { asset_issuer=null, perPage = 10,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
     let params = {
       asset_code: asset_code||ASSET_CODE,
       asset_issuer:asset_issuer||ASSET_ISSUER, // Adding asset_code parameter
-      cursor: ''||cursor,             // Adding cursor parameter
+      cursor: cursor,             // Adding cursor parameter
       order: 'desc',             // Adding order parameter
       limit: perPage
     };
 
     const url = QUICKNODE_RPC_URL + "assets?" + new URLSearchParams(params).toString();
-
+    console.log(url);
     const response = await axios.get(
       url,
       {
@@ -43,7 +43,7 @@ app.post('/api/fetchAssetDetail', async (req, res) => {
 //https://developers.stellar.org/api/horizon
 app.post('/api/infoCollection', async (req, res) => {
   try {
-    let { asset_issuer=null, perPage = 10,asset_code=null,cursor=null } = req.body; // Accessing parameters from query string
+    let { asset_issuer=null, perPage = 10,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
     let asset= (asset_code||ASSET_CODE) +":" +(asset_issuer||ASSET_ISSUER)
     let params = {
       asset: asset,
