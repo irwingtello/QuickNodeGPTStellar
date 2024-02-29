@@ -18,17 +18,17 @@ app.post('/api/fetchAssetDetail', async (req, res) => {
   try {
     let { asset_issuer=null, perPage = 10,asset_code=null,cursor=null } = req.body; // Accessing parameters from query string
     let params = {
-      asset_code: asset_code||asset_issuer,
-      asset_issuer:asset_issuer||asset_issuer, // Adding asset_code parameter
+      asset_code: asset_code||ASSET_CODE,
+      asset_issuer:asset_issuer||ASSET_ISSUER, // Adding asset_code parameter
       cursor: 'null'||cursor,             // Adding cursor parameter
       order: 'desc',             // Adding order parameter
       limit: perPage
     };
 
+    const url = QUICKNODE_RPC_URL + "assets?" + new URLSearchParams(params).toString();
     const response = await axios.get(
-      QUICKNODE_RPC_URL,
+      url,
       {
-        params: params,
         headers: { 'Content-Type': 'application/json' }
       }
     );
