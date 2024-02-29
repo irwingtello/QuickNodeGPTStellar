@@ -6,6 +6,7 @@ const QUICKNODE_RPC_URL = process.env.QUICKNODE_RPC_URL;
 const ASSET_CODE=process.env.ASSET_CODE;
 const ASSET_ISSUER= process.env.ASSET_ISSUER;
 const STELLAR_URL=process.env.STELLAR_URL;
+const PER_PAGE=process.env.PER_PAGE;
 const app = express();
 
 const PORT="3000";
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 //Returns data from the Assets. 
 app.post('/api/fetchAssetDetail', async (req, res) => {
   try {
-    let { asset_issuer=null, perPage = 10,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
+    let { asset_issuer=null, perPage = PER_PAGE,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
     let params = {
       asset_code: asset_code||ASSET_CODE,
       asset_issuer:asset_issuer||ASSET_ISSUER, // Adding asset_code parameter
@@ -43,7 +44,7 @@ app.post('/api/fetchAssetDetail', async (req, res) => {
 //https://developers.stellar.org/api/horizon
 app.post('/api/infoCollection', async (req, res) => {
   try {
-    let { asset_issuer=null, perPage = 10,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
+    let { asset_issuer=null, perPage = PER_PAGE,asset_code=null,cursor='' } = req.body; // Accessing parameters from query string
     let asset= (asset_code||ASSET_CODE) +":" +(asset_issuer||ASSET_ISSUER)
     let params = {
       asset: asset,
